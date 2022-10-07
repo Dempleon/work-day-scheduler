@@ -56,7 +56,7 @@ function addTimeBlocktoPage(block) {
     textEl.val(block.activities);
 
     var btnEl = $('<button>');
-    btnEl.addClass('input-group-append btn saveBtn border-left-0 align-middle');
+    btnEl.addClass('input-group-append btn saveBtn border-left-0');
     btnEl.attr('id', block.timeBlock);
     btnEl.attr('type', 'button');
     btnEl.html('💾');

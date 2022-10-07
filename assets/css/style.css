@@ -63,7 +63,7 @@ textarea{
   border-bottom-right-radius: 15px;
   background-color: #06AED5;
   color: white;
-  
+  align-items: center;
 }
 .saveBtn:hover {
   font-size: 20px;
@@ -75,7 +75,12 @@ textarea{
   width: 70px;
 }
 
+.input-group {
+  height: 150px;
+}
+
 .container {
   margin-top: 10vh;
   margin-bottom: 10vh;
+  /* height: 20vh; */
 }
