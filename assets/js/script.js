@@ -57,8 +57,7 @@ function addTimeBlocktoPage(block) {
     var currentDateTime = moment().format(format);
     // var currentDate = moment().format('dddd, MMMM Do YYYY, ');
     var blockTimeDate = moment().format('dddd, MMMM Do YYYY, ') + block.timeBlock;
-    console.log('blockTimeDate = ' + blockTimeDate);
-    console.log('currentdatetime = ' + currentDateTime);
+
     // if the timeblock is before the current time
     // apply a gray background to the textbox
     if(moment(blockTimeDate, format).isBefore(moment(currentDateTime, format))) {
@@ -89,39 +88,11 @@ function addTimeBlocktoPage(block) {
 
 }
 
-
-// when a save button is pressed, the text for that box is updated in the array of timeBlock objects
-// when the page is refreshed, I want whatever text is inside the text box to still be saved
-
-// addTimeBlocktoPage(timeBlocks[0]);
-// addTimeBlocktoPage(timeBlocks[0]);
-getLocalStorage();
-for(var i = 0; i < timeBlocks.length; i++) {
-    addTimeBlocktoPage(timeBlocks[i]);
-}
-
-
-
-// When the floppy disk icon is clicked, then the text inside is saved nd synced with local storage
-$('.saveBtn').click( function() {
-    var id = $(this).attr('id');
-    console.log(this);
-    console.log(id);
-    for (let index = 0; index < timeBlocks.length; index++) {
-        if(timeBlocks[index].timeBlock === id) {
-            timeBlocks[index].activities = $('#' + id).prev().val();
-        }
-    }
-    console.log(timeBlocks);
-    setLocalStorage();
-    
-});
-
 // function to sync timeblocks with localstorage
 function setLocalStorage() {
     localStorage.setItem('schedule', JSON.stringify(timeBlocks));
 }
-
+// function to get saved timeblocks data from localstorage
 function getLocalStorage() {
     // if data exists in local storage the set timeblocks = to local storage
     // else set whatever is in timeblocks and save to local storage
@@ -133,21 +104,22 @@ function getLocalStorage() {
     }
 }
 
-
-var currentDay = $('#currentDay');
-currentDay.text(moment().format('dddd, MMMM Do'));
-
-console.log(moment().format('h'));
-sometime = moment('12am', 'ha')['_i'];
-console.log(sometime);
-console.log(moment('9am', 'ha'));
-
-console.log(moment('12am', 'ha').isBefore('1am', 'ha'))
-var format = "dddd, MMMM Do YYYY, ha"
-datetime = moment().format("dddd, MMMM Do YYYY, ha");
-console.log(datetime);
-// Thursday, October 6th 2022, 7pm
-console.log(moment('Thursday, October 6th 2022, 12pm', format).isBefore(moment('Thursday, October 6th 2022, 12pm', format)));
-if(moment('Thursday, October 6th 2022, 7pm', format).isSame(moment('Thursday, October 6th 2022, 7pm', format), 'hour')) {
-    console.log('true');
+getLocalStorage();
+for(var i = 0; i < timeBlocks.length; i++) {
+    addTimeBlocktoPage(timeBlocks[i]);
 }
+
+// When the floppy disk icon is clicked, then the text inside is saved nd synced with local storage
+$('.saveBtn').click( function() {
+    var id = $(this).attr('id');
+    for (let index = 0; index < timeBlocks.length; index++) {
+        if(timeBlocks[index].timeBlock === id) {
+            timeBlocks[index].activities = $('#' + id).prev().val();
+        }
+    }
+    setLocalStorage();
+});
+
+
+var currentDateTime = $('#currentDay');
+currentDateTime.text(moment().format('dddd, MMMM Do, ha'));
