@@ -99,7 +99,7 @@ function getLocalStorage() {
         timeBlocks = JSON.parse(localStorage.getItem('schedule'));
     }
     else {
-        localStorage.setItem('schedule', JSON.parse(timeBlocks));
+        localStorage.setItem('schedule', JSON.stringify(timeBlocks));
     }
 }
 
