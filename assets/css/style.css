@@ -15,10 +15,10 @@ textarea{
 
 .jumbotron {
   text-align: center;
-  background-color: transparent;
-  color: black;
+  background-color: #e9ecef;
+  color: #495057;
   border-radius: 0;
-  border-bottom: 10px solid black;
+  border-bottom: 10px solid #ced4da;
 }
 
 .description{
@@ -61,6 +61,8 @@ textarea{
   border-left: 1px solid black;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
   background-color: #06AED5;
   color: white;
   align-items: center;
@@ -73,14 +75,26 @@ textarea{
 
 .input-group-text{
   width: 70px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .input-group {
   height: 150px;
+  padding-top: 5px;
 }
 
 .container {
   margin-top: 10vh;
   margin-bottom: 10vh;
   /* height: 20vh; */
+}
+
+body {
+  background-color: #43434e;
+}
+
+footer {
+  background-color: #e9ecef;
+  color: #495057;
 }

@@ -72,7 +72,7 @@ function addTimeBlocktoPage(block) {
     // apply a red background to the textbox
     if(moment(blockTimeDate, format).isSame(moment(currentDateTime, format), 'hour')) {
         console.log('true');
-        textEl.addClass('bg-secondary');
+        textEl.addClass('bg-danger');
     }
 
     var btnEl = $('<button>');
@@ -84,8 +84,7 @@ function addTimeBlocktoPage(block) {
     timeBlockEl.append(blockLabel);
     timeBlockEl.append(textEl);
     timeBlockEl.append(btnEl);
-    $('.container').append(timeBlockEl);
-
+    $('.main').append(timeBlockEl);
 }
 
 // function to sync timeblocks with localstorage
@@ -104,12 +103,18 @@ function getLocalStorage() {
     }
 }
 
+// pull from local storage and dynamically build the timeblocks
 getLocalStorage();
-for(var i = 0; i < timeBlocks.length; i++) {
-    addTimeBlocktoPage(timeBlocks[i]);
+function displayBlocks() {
+    $('.main').empty();
+    for(var i = 0; i < timeBlocks.length; i++) {
+        addTimeBlocktoPage(timeBlocks[i]);
+    }
 }
+displayBlocks();
 
-// When the floppy disk icon is clicked, then the text inside is saved nd synced with local storage
+
+// When the floppy disk icon is clicked, then the text inside is saved and synced with local storage
 $('.saveBtn').click( function() {
     var id = $(this).attr('id');
     for (let index = 0; index < timeBlocks.length; index++) {
@@ -123,3 +128,15 @@ $('.saveBtn').click( function() {
 
 var currentDateTime = $('#currentDay');
 currentDateTime.text(moment().format('dddd, MMMM Do, ha'));
+
+// Every hour, reset the page so that the color in the textboxes change
+var minstoHour = 60 - moment().format('m');
+var mstoHour = minstoHour * 60 * 1000;
+console.log(mstoHour);
+function reFreshTimeBlocks () {
+    var minstoHour = 60 - moment().format('m');
+    var mstoHour = minstoHour * 60 * 1000;
+    displayBlocks();
+    setTimeout(reFreshTimeBlocks, mstoHour);
+}
+setTimeout(reFreshTimeBlocks, mstoHour);
