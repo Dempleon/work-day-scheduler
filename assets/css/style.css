@@ -63,9 +63,19 @@ textarea{
   border-bottom-right-radius: 15px;
   background-color: #06AED5;
   color: white;
+  
 }
-
-.saveBtn i:hover {
+.saveBtn:hover {
   font-size: 20px;
   transition: all .3s ease-in-out;
+  background-color: #06d533;
+}
+
+.input-group-text{
+  width: 70px;
+}
+
+.container {
+  margin-top: 10vh;
+  margin-bottom: 10vh;
 }
