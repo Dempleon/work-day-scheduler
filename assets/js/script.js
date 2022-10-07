@@ -1,10 +1,7 @@
-var currentDay = $('#currentDay');
-currentDay.text(moment().format('dddd, MMMM Do'));
-
 var timeBlocks = [
     {
         timeBlock: '9am',
-        activities: 'this is the first block do this and that',
+        activities: '',
     },
     {
         timeBlock: '10am',
@@ -41,6 +38,7 @@ var timeBlocks = [
 ]
 
 // function to dynamically create html bootstrap elements from an object
+// the background of the text boxes change with the times of day
 function addTimeBlocktoPage(block) {
     var timeBlockEl = $('<div>');
     timeBlockEl.addClass('input-group');
@@ -52,8 +50,31 @@ function addTimeBlocktoPage(block) {
     blockLabel.html(block.timeBlock);
 
     var textEl = $('<textarea>');
-    textEl.addClass('form-control border-right-0');
+    textEl.addClass('form-control border-right-0 text-white');
     textEl.val(block.activities);
+    // change the color of the activities depending on the time of the day
+    var format = "dddd, MMMM Do YYYY, ha"
+    var currentDateTime = moment().format(format);
+    // var currentDate = moment().format('dddd, MMMM Do YYYY, ');
+    var blockTimeDate = moment().format('dddd, MMMM Do YYYY, ') + block.timeBlock;
+    console.log('blockTimeDate = ' + blockTimeDate);
+    console.log('currentdatetime = ' + currentDateTime);
+    // if the timeblock is before the current time
+    // apply a gray background to the textbox
+    if(moment(blockTimeDate, format).isBefore(moment(currentDateTime, format))) {
+        textEl.addClass('bg-secondary');
+    }
+    // if the timeblock is after the current time
+    // apply a green background to the textbox
+    if(moment(blockTimeDate, format).isAfter(moment(currentDateTime, format))) {
+        textEl.addClass('bg-success');
+    }
+    // if the timeblock is the same hour
+    // apply a red background to the textbox
+    if(moment(blockTimeDate, format).isSame(moment(currentDateTime, format), 'hour')) {
+        console.log('true');
+        textEl.addClass('bg-secondary');
+    }
 
     var btnEl = $('<button>');
     btnEl.addClass('input-group-append btn saveBtn border-left-0');
@@ -64,8 +85,8 @@ function addTimeBlocktoPage(block) {
     timeBlockEl.append(blockLabel);
     timeBlockEl.append(textEl);
     timeBlockEl.append(btnEl);
-    
     $('.container').append(timeBlockEl);
+
 }
 
 
@@ -81,9 +102,7 @@ for(var i = 0; i < timeBlocks.length; i++) {
 
 
 
-// I want to be able to save what is typed in the text box and put it in local storage
-// for now i just want to save what is in the input box when i click on the whole box
-// save the text inside when the leftbox is clicked
+// When the floppy disk icon is clicked, then the text inside is saved nd synced with local storage
 $('.saveBtn').click( function() {
     var id = $(this).attr('id');
     console.log(this);
@@ -114,3 +133,21 @@ function getLocalStorage() {
     }
 }
 
+
+var currentDay = $('#currentDay');
+currentDay.text(moment().format('dddd, MMMM Do'));
+
+console.log(moment().format('h'));
+sometime = moment('12am', 'ha')['_i'];
+console.log(sometime);
+console.log(moment('9am', 'ha'));
+
+console.log(moment('12am', 'ha').isBefore('1am', 'ha'))
+var format = "dddd, MMMM Do YYYY, ha"
+datetime = moment().format("dddd, MMMM Do YYYY, ha");
+console.log(datetime);
+// Thursday, October 6th 2022, 7pm
+console.log(moment('Thursday, October 6th 2022, 12pm', format).isBefore(moment('Thursday, October 6th 2022, 12pm', format)));
+if(moment('Thursday, October 6th 2022, 7pm', format).isSame(moment('Thursday, October 6th 2022, 7pm', format), 'hour')) {
+    console.log('true');
+}
